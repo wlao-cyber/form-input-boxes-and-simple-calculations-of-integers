@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- author: Wilson Lao; date of page creation: 2022-09-16 -->
+	<meta charset="utf-8">
+	<title>Form Text Boxes and Calculations</title>
+	<meta name="description" content="using form text boxes">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		
+	
+	<script>
+
+		// the jQuery script needs to use "#results" with # in front or just "textarea"
+		// placing the jQuery script first before the function seems to allow fading
+		// before results show up.
+		
+		$(document).ready(function(){
+		  $("#fade").click(function(){
+			$("#results").fadeTo("slow",0.25);
+		  });
+		});
+
+		// Adding another jQuery script to give the option of unfading
+		$(document).ready(function(){
+		  $("#unfade").click(function(){
+			$("#results").fadeTo("slow",1);
+		  });
+		});
+
+		function calculations()
+		{
+		var integer1, integer2, integer3, i1, i2, i3, sum, avg, product, minint, maxint;
+		integer1 = document.getElementById("int1").value;
+		integer2 = document.getElementById("int2").value;
+		integer3 = document.getElementById("int3").value;
+
+		//parseInt to normalize number input into integers
+		//parseInt will also return NaN if input is NOT a number, as in the case of null input
+		i1 = parseInt(integer1);
+		i2 = parseInt(integer2);
+		i3 = parseInt(integer3);
+
+		sum = i1 + i2 + i3;
+		avg = (i1 + i2 + i3)/3;
+		product = i1*i2*i3;
+		//Built-in Math object to check for min and max integers
+		minint = Math.min(i1, i2, i3);
+		maxint = Math.max(i1, i2, i3);
+		
+		// Because of type="number" requirement in form inputs, only numbers should be allowed
+		// But still need to watch out for NaN if inputs are left blank (null). 
+		// Checking for the sum of all inputs should detect whether there is any NaN
+		// if else statement checks if sum is an integer
+		// Otherwise, user will be asked to enter integer in each input box.
+		if (Number.isInteger(sum))
+		{
+			//only one document.getElementById("results").value statement to concatenate all results
+			document.getElementById("results").value = "The sum is " + sum + ".\nThe average is " 
+			+ avg + ".\nThe product is " + product + ".\nThe minimum integer is " + minint +
+			".\nThe maximum integer is " + maxint + ".";
+		}
+		else{
+			document.getElementById("results").value = "Please enter an integer in each input box!";
+		}
+		}
+	</script>
+	
+	<!-- Using CSS to align input boxes -->
+	<!-- align input text to the right as well-->
+	<style>
+	h1 {font-size: 3em; color:blue; text-align:center; font-style:italic}
+	h2 {font-size: 1em; color:black; text-align:left; font-weight:bold}
+	body {background-color:silver; font-size:1.5em}
+	p     { display: table-row;  }
+	label { display: table-cell; }
+	input { display: table-cell; text-align: right; font-size: 20px;}
+	textarea {font-size: 20px;}
+	</style>
+</head>
+
+<body>
+<header>
+	<h1>Part 2 Input: Using Form Text Boxes</h1>
+</header>
+
+<section>
+<h2>Enter 3 integers. Any floating numbers entered will be rounded out before calculations.</h2>
+
+<form>
+	<!-- Using label tags to make input more user-friendly-->
+	<!-- only allowing numbers to be entered but still need to watch out for null entries-->
+	<!-- reset button to clear all input values-->
+	<p>
+		<label for="int1">First Integer: </label>
+		<input id="int1" type="number">
+	</p>
+	<p>
+		<label for="int2">Second Integer: </label>
+		<input id="int2" type="number">
+	</p>
+	<p>
+		<label for="int3">Third Integer: </label>
+		<input id="int3" type="number">
+	</p>
+	
+	<input type="button" onclick="calculations()" value="SUBMIT">
+	<input type="reset" value="RESET">
+</form>
+
+</section>
+
+<section>
+<h2>Results</h2>
+<textarea name="results" id="results" rows="10" cols="100" readonly></textarea><br>
+
+<!-- A button for fading and another for unfading-->
+<button id="fade">Click to Fade Results</button>
+<button id="unfade">Click to Unfade Results</button>
+</section>
+
+<footer>
+<br><br><br>
+<a href="./">Return to Main Page</a>
+</footer>
+
+</body>
+
+</html>
